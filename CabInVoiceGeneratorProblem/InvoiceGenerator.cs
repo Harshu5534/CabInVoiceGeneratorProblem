@@ -1,4 +1,5 @@
-﻿using CabInVoiceGeneratorProblem;
+﻿using CabInvoiceGenerator;
+using CabInVoiceGeneratorProblem;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -26,6 +27,15 @@ namespace CabInVoiceGeneratorProblem
             }
             return result / rides.Length;
 
+        }
+        public InvoiceSummary MultipleRides(Ride[] rides)
+        {
+            double result = 0;
+            foreach (var data in rides)
+            {
+                result += CalculateFare(data.distance, data.time);
+            }
+            return new InvoiceSummary(rides.Length, result);
         }
     }
 }
