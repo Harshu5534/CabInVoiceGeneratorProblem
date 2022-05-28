@@ -6,11 +6,19 @@ namespace InvoiceTester
     public class Tests
     {
         [Test]
-        public void GivenTimeAndDistance_ShouldReturnTotalFare()
+        public void InputInInteger_ShouldReturn_SingleRides_TotalFare()
         {
             InvoiceGenerator invoice = new InvoiceGenerator();
             double actual = invoice.CalculateFare(6, 5);
             Assert.AreEqual(actual, 65);
+        }
+        [Test]
+        public void InputInInteger_ShouldReturn_MultipleRides_TotalFare()
+        {
+            InvoiceGenerator invoice = new InvoiceGenerator();
+            Ride[] rides = { new Ride(2, 3), new Ride(4, 5) };
+            double result = invoice.CalculateMultipleRides(rides);
+            Assert.AreEqual(result, 23, 45);
         }
     }
 }

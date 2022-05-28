@@ -17,6 +17,16 @@ namespace CabInVoiceGeneratorProblem
             double calulateFare = distance * FARE_PER_KM + time * FARE_PER_MIN;
             return Math.Max(calulateFare, MIN_FARE);
         }
+        public double CalculateMultipleRides(Ride[] rides)
+        {
+            double result = 0;
+            foreach (var data in rides)
+            {
+                result += CalculateFare(data.distance,data.time);
+            }
+            return result / rides.Length;
+
+        }
     }
 }
        
