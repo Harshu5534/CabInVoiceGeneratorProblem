@@ -10,24 +10,41 @@ namespace CabInvoiceGenerator
     public class RideRepository
     {
         Dictionary<string, Ride[]> rideDict = new Dictionary<string, Ride[]>();
+        public RideRepository()
+        {
+            this.rideDict = new Dictionary<string, Ride[]>();
+        }
         public void Addrides(string userId,Ride[] rides)
         {
-            if(!rideDict.ContainsKey(userId))
+            try
             {
-                rideDict.Add(userId,rides);
-            }
-        }
-        public Ride[] GetRides(string userId)
-        {
-            foreach(var data in rideDict)
-            {
-                if (data.Key == userId)
+                if (!rideDict.ContainsKey(userId))
                 {
-                    return data.Value;
+                    rideDict.Add(userId, rides);
                 }
             }
-            return null;
+            catch(InvoiceException)
+            {
+                throw new InvoiceException(InvoiceException.ExceptionType.NULL_RIDES,"Rides are Null");
+            }
         }
-
+        public Ride[] GetRide(string userId)
+        {
+            try
+            {
+                foreach (var data in rideDict)
+                {
+                    if (data.Key == userId)
+                    {
+                       return data.Value;
+                    }
+                }
+                return null;
+            }
+            catch (InvoiceException)
+            {
+                throw new InvoiceException(InvoiceException.ExceptionType.INVALID_USER_ID, "User id is Invalid");
+            }
+        }
     }
 }
